@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CastSign WebView表示診断 v2</title>
+<style>
+html,body{margin:0;padding:0;background:#161b22;color:#fff;font-family:Arial,sans-serif;font-size:18px;}
+main{padding:20px;max-width:1120px;box-sizing:border-box;}
+h1{font-size:26px;margin:0 0 14px;}p{line-height:1.5;}table{border-collapse:collapse;margin:12px 0 24px;width:100%;max-width:850px;}th,td{border:1px solid #8ca6b9;padding:9px;text-align:left;}th{background:#26394b;}td{font-family:monospace;font-size:22px;color:#b0ffd0;}#status{background:#574313;padding:12px;font-weight:bold;}#error{white-space:pre-wrap;color:#ffabab;} .line{height:1px;background:white;width:300px;margin:18px 0;} .test{border:2px solid #6df5ec;padding:16px;width:620px;max-width:100%;box-sizing:border-box;} .tiny{font-size:12px;}.small{font-size:16px;}.medium{font-size:24px;}.stripe{width:80px;height:65px;background:repeating-linear-gradient(to right,white 0px,white 1px,black 1px,black 2px)}
+</style>
+</head>
+<body>
+<main>
+<h1>CastSign WebView表示診断 v2</h1>
+<p id="status">JavaScript：未実行（JavaScript無効・読み込み中・エラーの可能性）</p>
+<p id="error"></p>
+<table><thead><tr><th>項目</th><th>値</th></tr></thead><tbody>
+<tr><th>innerWidth</th><td id="iw">未取得</td></tr>
+<tr><th>innerHeight</th><td id="ih">未取得</td></tr>
+<tr><th>screen.width</th><td id="sw">未取得</td></tr>
+<tr><th>screen.height</th><td id="sh">未取得</td></tr>
+<tr><th>devicePixelRatio</th><td id="dpr">未取得</td></tr>
+<tr><th>document.clientWidth</th><td id="cw">未取得</td></tr>
+<tr><th>document.clientHeight</th><td id="ch">未取得</td></tr>
+<tr><th>visualViewport.width</th><td id="vw">未取得</td></tr>
+<tr><th>visualViewport.scale</th><td id="vs">未取得</td></tr>
+</tbody></table>
+<div class="test"><b>表示品質テスト</b><div class="line"></div><div class="stripe"></div><p class="tiny">12px: ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789</p><p class="small">16px: ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789</p><p class="medium">24px: ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789</p></div>
+<p style="font-size:13px">注意：画面サイズ×DPRだけではHDMI出力解像度やレンダリング解像度を確定できません。</p>
+</main>
+<script>
+(function(){
+  function put(id,value){document.getElementById(id).textContent=String(value);}
+  try {
+    put('status','JavaScript：実行成功');
+    put('iw',window.innerWidth); put('ih',window.innerHeight);
+    put('sw',window.screen.width); put('sh',window.screen.height);
+    put('dpr',window.devicePixelRatio);
+    put('cw',document.documentElement.clientWidth);
+    put('ch',document.documentElement.clientHeight);
+    put('vw',window.visualViewport ? window.visualViewport.width : '非対応');
+    put('vs',window.visualViewport ? window.visualViewport.scale : '非対応');
+    document.getElementById('status').style.background='#1b6043';
+  } catch(e) {
+    document.getElementById('status').textContent='JavaScript：エラー';
+    document.getElementById('error').textContent=String(e);
+  }
+})();
+</script>
+</body>
+</html>
