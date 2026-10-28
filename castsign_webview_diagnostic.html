@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CastSign WebView 表示診断</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#101820;color:#fff;font-family:Arial,'Noto Sans JP',sans-serif;padding:24px}h1{font-size:32px;margin:0 0 12px}p{font-size:19px;line-height:1.5}table{border-collapse:collapse;width:min(900px,100%);font-size:24px;background:#1b2b3b}th,td{border:1px solid #6a8394;padding:10px;text-align:left}th{width:55%}.small{font-size:14px}.pattern{display:flex;gap:10px;align-items:center;margin:18px 0;flex-wrap:wrap}.line{width:300px;height:1px;background:white}.square{width:100px;height:100px;border:1px solid white;background:repeating-linear-gradient(90deg,#fff 0px,#fff 1px,#000 1px,#000 2px)}.box{border:2px solid #45d3f4;padding:12px;width: min(100%, 920px)}
+</style>
+</head>
+<body>
+<h1>CastSign WebView 表示診断</h1>
+<p>PA-110のCastSign上でこの画面を表示し、表と細線の写真を撮影してください。ページ全体の表示を確認してください。</p>
+<table><tbody id="metrics"></tbody></table>
+<div class="box"><p>画質確認：細い線・小さい文字が読めるか確認</p>
+<div class="pattern"><div class="line"></div><span>1 CSS pxの水平線</span></div>
+<div class="pattern"><div class="square"></div><span>1 CSS px白黒ストライプ</span></div>
+<p style="font-size:12px">12px 小さい文字：ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789</p>
+<p style="font-size:16px">16px 文字：ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789</p>
+<p style="font-size:24px">24px 文字：ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789</p></div>
+<p class="small">注意：CSSピクセル×DPRは物理解像度や実際のレンダリング品質を確定するものではありません。</p>
+<script>
+function refresh(){
+const vv=window.visualViewport;
+const data={
+'日時':new Date().toLocaleString(),
+'URL':location.href,
+'window.innerWidth (CSS px)':innerWidth,
+'window.innerHeight (CSS px)':innerHeight,
+'screen.width (CSS px)':screen.width,
+'screen.height (CSS px)':screen.height,
+'devicePixelRatio':devicePixelRatio,
+'documentElement.clientWidth':document.documentElement.clientWidth,
+'documentElement.clientHeight':document.documentElement.clientHeight,
+'visualViewport.width':vv?vv.width.toFixed(2):'N/A',
+'visualViewport.height':vv?vv.height.toFixed(2):'N/A',
+'visualViewport.scale':vv?vv.scale:'N/A',
+'参考 screen幅×DPR':(screen.width*devicePixelRatio).toFixed(0),
+'参考 screen高さ×DPR':(screen.height*devicePixelRatio).toFixed(0),
+'userAgent':navigator.userAgent
+};
+document.getElementById('metrics').replaceChildren(...Object.entries(data).map(([k,v])=>{const tr=document.createElement('tr');const th=document.createElement('th');const td=document.createElement('td');th.textContent=k;td.textContent=v;td.style.overflowWrap='anywhere';tr.append(th,td);return tr}));
+}
+refresh();addEventListener('resize',refresh);
+</script>
+</body>
+</html>
